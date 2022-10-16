@@ -9,5 +9,8 @@
             <module name="org.jboss.logging" export="true" />
             <module name="org.bouncycastle" export="true" />
         </dependencies>
+        <resources>
+            <resource-root path=""/>
+        </resources>
     </deployment>
 </jboss-deployment-structure>

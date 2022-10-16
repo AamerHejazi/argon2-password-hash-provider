@@ -8,7 +8,7 @@ import org.keycloak.policy.PasswordPolicyConfigException;
  */
 public class Argon2VariantPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
     public static final String ID = "argon2Variant";
-    public static final String DEFAULT_ARGON2_VARIANT = Argon2Variant.ARGON2ID.getArgon2VariantStringRepr();
+    public static final String DEFAULT_ARGON2_VARIANT = Argon2Variant.ARGON2I.getArgon2VariantStringRepr();
 
     @Override
     public String getId() {

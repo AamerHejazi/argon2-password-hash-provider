@@ -5,7 +5,7 @@ package be.cronos.keycloak.policy;
  */
 public class Argon2IterationsPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
     public static final String ID = "argon2Iterations";
-    public static final int DEFAULT_ITERATIONS = 1;
+    public static final int DEFAULT_ITERATIONS = 2;
 
     @Override
     public String getId() {

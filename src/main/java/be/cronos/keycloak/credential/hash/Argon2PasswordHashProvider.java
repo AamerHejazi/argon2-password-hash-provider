@@ -10,6 +10,8 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.PasswordPolicy;
 import org.keycloak.models.credential.PasswordCredentialModel;
 
+import java.util.Arrays;
+
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
  */
@@ -59,7 +61,6 @@ public class Argon2PasswordHashProvider implements PasswordHashProvider {
 
         // Generate a salt
         byte[] salt = Argon2Helper.getSalt(configuredArgon2Parameters.getSaltLength());
-
         // Retrieve an encoded Argon2 password hash
         String hash = Argon2Helper.hashPassword(
                 rawPassword,
@@ -105,7 +106,8 @@ public class Argon2PasswordHashProvider implements PasswordHashProvider {
 
     private Argon2EncodingUtils.Argon2Parameters getConfiguredArgon2Parameters() {
         return new Argon2EncodingUtils.Argon2Parameters(
-                Argon2Variant.parseVariant(getDefaultValue(Argon2VariantPasswordPolicyProviderFactory.ID, Argon2VariantPasswordPolicyProviderFactory.DEFAULT_ARGON2_VARIANT)),
+                Argon2Variant.parseVariant(
+                        getDefaultValue(Argon2VariantPasswordPolicyProviderFactory.ID, Argon2VariantPasswordPolicyProviderFactory.DEFAULT_ARGON2_VARIANT)),
                 getDefaultValue(Argon2VersionPasswordPolicyProviderFactory.ID, Argon2VersionPasswordPolicyProviderFactory.DEFAULT_VERSION),
                 getDefaultValue(Argon2MemoryPasswordPolicyProviderFactory.ID, Argon2MemoryPasswordPolicyProviderFactory.DEFAULT_MEMORY),
                 getDefaultValue(Argon2IterationsPasswordPolicyProviderFactory.ID, Argon2IterationsPasswordPolicyProviderFactory.DEFAULT_ITERATIONS),

@@ -19,7 +19,7 @@ public class Argon2MaxTimePasswordPolicyProviderFactory extends Argon2GenericPol
 
     @Override
     public String getDefaultConfigValue() {
-        return String.valueOf(1000);
+        return String.valueOf(2000);
     }
 
 }

@@ -5,7 +5,7 @@ package be.cronos.keycloak.policy;
  */
 public class Argon2MemoryPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
     public static final String ID = "argon2Memory";
-    public static final int DEFAULT_MEMORY = 65536;
+    public static final int DEFAULT_MEMORY = 512;
 
     @Override
     public String getId() {

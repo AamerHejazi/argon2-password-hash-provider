@@ -5,7 +5,7 @@ package be.cronos.keycloak.policy;
  */
 public class Argon2ParallelismPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
     public static final String ID = "argon2Parallelism";
-    public static final int DEFAULT_PARALLELISM = 1;
+    public static final int DEFAULT_PARALLELISM = 2;
 
     @Override
     public String getId() {

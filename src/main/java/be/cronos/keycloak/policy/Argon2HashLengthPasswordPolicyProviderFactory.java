@@ -5,7 +5,7 @@ package be.cronos.keycloak.policy;
  */
 public class Argon2HashLengthPasswordPolicyProviderFactory extends Argon2GenericPolicyProviderFactory {
     public static final String ID = "argon2HashLength";
-    public static final int DEFAULT_HASH_LENGTH = 32;
+    public static final int DEFAULT_HASH_LENGTH = 16;
 
     @Override
     public String getId() {
