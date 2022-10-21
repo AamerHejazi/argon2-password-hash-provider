@@ -2,12 +2,12 @@ package be.cronos.keycloak.utils;
 
 import be.cronos.keycloak.enums.Argon2Variant;
 import be.cronos.keycloak.exceptions.Argon2RuntimeException;
+import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
 import org.jboss.logging.Logger;
 import org.keycloak.models.credential.PasswordCredentialModel;
-import de.mkammerer.argon2.Argon2;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
