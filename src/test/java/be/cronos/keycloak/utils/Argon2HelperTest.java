@@ -8,9 +8,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.keycloak.models.credential.PasswordCredentialModel;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.xml.bind.DatatypeConverter;
-import java.util.Arrays;
 import java.util.Base64;
 
 /**
@@ -288,5 +289,21 @@ public class Argon2HelperTest {
         boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
         Assert.assertTrue(verified);
     }
+
+    @Test()
+    public void verifyPasswordWithSecurity(){
+        String rawPassword = "Ta_account1000";
+        String hash = "$argon2i$v=19$m=512,t=2,p=2$nn20dAxkThQlX9XYwIeGQg$8NPr0Ju5VFEhLWjJ1tjbEw";
+
+        System.out.println(DatatypeConverter.printBase64Binary(salt));
+        //PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16,16,2,512,2);
+        //boolean verified = passwordEncoder.matches(rawPassword,hash);
+        //System.out.println(verified);
+PasswordCredentialModel passwordCredentialModel = PasswordCredentialModel.createFromValues(ALGORITHM, salt, DEFAULT_ITERATIONS, hash);
+        passwordCredentialModel.setSecretData(hash);
+        boolean verified = Argon2Helper.verifyPassword(rawPassword, passwordCredentialModel);
+        Assert.assertTrue(verified);
+    }
+
     // endregion: wrong algorithm in hash
 }

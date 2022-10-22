@@ -1,9 +1,9 @@
 package be.cronos.keycloak.utils;
 
+import be.cronos.keycloak.credential.hash.Argon2PasswordHashProvider;
 import be.cronos.keycloak.enums.Argon2Variant;
 import be.cronos.keycloak.exceptions.Argon2RuntimeException;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+import be.cronos.keycloak.policy.Argon2SaltLengthPasswordPolicyProviderFactory;
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
 import org.jboss.logging.Logger;
@@ -13,7 +13,9 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-import static de.mkammerer.argon2.Argon2Factory.Argon2Types.*;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
@@ -110,29 +112,21 @@ public class Argon2Helper {
         }
 
         System.out.println(argon2Parameters.getArgon2Variant().toString());
-        String argon2Type = argon2Parameters.getArgon2Variant().toString();
-        Argon2Factory.Argon2Types realArgon2Types;
-        switch (argon2Type){
-            case "ARGON2I":
-                realArgon2Types = ARGON2i;
-                break;
-            case "ARGON2D":
-                realArgon2Types = ARGON2d;
-                break;
-            case "ARGON2ID":
-                realArgon2Types = ARGON2id;
-                break;
-            default:
-                throw new IllegalArgumentException("No enum constant de.mkammerer.argon2.Argon2Factory.Argon2Types."+argon2Type );
-        }
-        //System.out.println("This is me " + Argon2Factory.Argon2Types.valueOf());
+
         System.out.println("The salt length is "+ argon2Parameters.getSaltLength());
         System.out.println("The salt hash is "+argon2Parameters.getHashLength());
+        System.out.println("Before passwordEncoder");
+        PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(
+                argon2Parameters.getSaltLength(),
+                argon2Parameters.getSaltLength(),
+                argon2Parameters.getParallelism(),
+                argon2Parameters.getMemory(),
+                argon2Parameters.getIterations());
 
-        Argon2 argon2 = Argon2Factory.createAdvanced(realArgon2Types,argon2Parameters.getSaltLength(),argon2Parameters.getHashLength());
 
         // Compare the 2 digests using constant-time comparison
-        boolean samePassword = argon2.verify(storedEncodedPassword, rawPassword);
+        System.out.println("after passwordEncoder");
+        boolean samePassword = passwordEncoder.matches(rawPassword,storedEncodedPassword);
         System.out.println("Are The two passwords are same? "+samePassword);
         LOG.debugf("Password match = %s", String.valueOf(samePassword));
 
